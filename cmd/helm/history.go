@@ -117,7 +117,7 @@ func (cmd *historyCmd) run() error {
 	case "table":
 		history = formatAsTable(releaseHistory, cmd.colWidth)
 	default:
-		return fmt.Errorf("unknown output format %q", format)
+		return fmt.Errorf("unknown output format %q", cmd.outputFormat)
 	}
 
 	if formattingError != nil {
