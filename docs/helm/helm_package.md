@@ -38,11 +38,12 @@ helm package [flags] [CHART_PATH] [...]
 ### Options inherited from parent commands
 
 ```
-      --debug                     enable verbose output
-      --home string               location of your Helm config. Overrides $HELM_HOME (default "~/.helm")
-      --host string               address of Tiller. Overrides $HELM_HOST
-      --kube-context string       name of the kubeconfig context to use
-      --tiller-namespace string   namespace of Tiller (default "kube-system")
+      --debug                           enable verbose output
+      --home string                     location of your Helm config. Overrides $HELM_HOME (default "~/.helm")
+      --host string                     address of Tiller. Overrides $HELM_HOST
+      --kube-context string             name of the kubeconfig context to use
+      --tiller-connection-timeout int   the duration (in seconds) Helm will wait to establish a connection to tiller (default 300)
+      --tiller-namespace string         namespace of Tiller (default "kube-system")
 ```
 
 ### SEE ALSO
