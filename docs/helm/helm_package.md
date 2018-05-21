@@ -22,15 +22,18 @@ helm package [flags] [CHART_PATH] [...]
 ### Options
 
 ```
-      --app-version string   Set the appVersion on the chart to this version
-  -u, --dependency-update    Update dependencies from "requirements.yaml" to dir "charts/" before packaging
-  -d, --destination string   Location to write the chart. (default ".")
-  -h, --help                 help for package
-      --key string           Name of the key to use when signing. Used if --sign is true
-      --keyring string       Location of a public keyring (default "~/.gnupg/pubring.gpg")
-      --save                 Save packaged chart to local chart repository (default true)
-      --sign                 Use a PGP private key to sign this package
-      --version string       Set the version on the chart to this semver version
+      --app-version string       Set the appVersion on the chart to this version
+  -u, --dependency-update        Update dependencies from "requirements.yaml" to dir "charts/" before packaging
+  -d, --destination string       Location to write the chart. (default ".")
+  -h, --help                     help for package
+      --key string               Name of the key to use when signing. Used if --sign is true
+      --keyring string           Location of a public keyring (default "~/.gnupg/pubring.gpg")
+      --save                     Save packaged chart to local chart repository (default true)
+      --set stringArray          Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+      --set-string stringArray   Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)
+      --sign                     Use a PGP private key to sign this package
+  -f, --values valueFiles        Specify values in a YAML file or a URL(can specify multiple) (default [])
+      --version string           Set the version on the chart to this semver version
 ```
 
 ### Options inherited from parent commands
