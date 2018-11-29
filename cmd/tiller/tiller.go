@@ -83,6 +83,7 @@ var (
 	sqlDialect          = flag.String("sql-dialect", "postgres", "SQL dialect to use (only postgres is supported for now")
 	sqlConnectionString = flag.String("sql-connection-string", "", "SQL connection string to use")
 
+	probeEnable          = flag.Bool("probe", true, "enable probe server")
 	remoteReleaseModules = flag.Bool("experimental-release", false, "enable experimental release modules")
 
 	tlsEnable    = flag.Bool("tls", tlsEnableEnvVarDefault(), "enable TLS")
@@ -205,7 +206,11 @@ func start() {
 
 	logger.Printf("Starting Tiller %s (tls=%t)", version.GetVersion(), *tlsEnable || *tlsVerify)
 	logger.Printf("GRPC listening on %s", *grpcAddr)
-	logger.Printf("Probes listening on %s", *probeAddr)
+	if *probeEnable {
+		logger.Printf("Probes listening on %s", *probeAddr)
+	} else {
+		logger.Printf("Probes disabled")
+	}
 	logger.Printf("Storage driver is %s", env.Releases.Name())
 	logger.Printf("Max history per release is %d", *maxHistory)
 
@@ -224,12 +229,13 @@ func start() {
 		}
 	}()
 
-	go func() {
-		mux := newProbesMux()
+	if *probeEnable {
+		go func() {
+			mux := newProbesMux()
 
-		// Register gRPC server to prometheus to initialized matrix
-		goprom.Register(rootServer)
-		addPrometheusHandler(mux)
+			// Register gRPC server to prometheus to initialized matrix
+			goprom.Register(rootServer)
+			addPrometheusHandler(mux)
 
 		if err := http.ListenAndServe(*probeAddr, mux); err != nil {
 			probeErrCh <- err
