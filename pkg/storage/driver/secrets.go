@@ -168,8 +168,16 @@ func (secrets *Secrets) Create(key string, rls *rspb.Release) error {
 			return storageerrors.ErrReleaseExists(rls.Name)
 		}
 
-		secrets.Log("create: failed to create: %s", err)
-		return err
+		if strings.Contains(err.Error(), "Internal error occurred: rpc error: code = DeadlineExceeded desc = context deadline exceeded") {
+			secrets.Log("create failed with err: %s", err)
+			secrets.Log("retrying")
+			_, err = secrets.impl.Create(obj)
+		}
+
+		if err != nil {
+			secrets.Log("create: failed to create: %s", err)
+			return err
+		}
 	}
 	return nil
 }
@@ -192,8 +200,16 @@ func (secrets *Secrets) Update(key string, rls *rspb.Release) error {
 	// push the secret object out into the kubiverse
 	_, err = secrets.impl.Update(obj)
 	if err != nil {
-		secrets.Log("update: failed to update: %s", err)
-		return err
+		if strings.Contains(err.Error(), "Internal error occurred: rpc error: code = DeadlineExceeded desc = context deadline exceeded") {
+			secrets.Log("update failed with err: %s", err)
+			secrets.Log("retrying")
+			_, err = secrets.impl.Update(obj)
+		}
+
+		if err != nil {
+			secrets.Log("update: failed to update: %s", err)
+			return err
+		}
 	}
 	return nil
 }
