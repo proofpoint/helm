@@ -169,7 +169,8 @@ func (secrets *Secrets) Create(key string, rls *rspb.Release) error {
 		}
 
 		if strings.Contains(err.Error(), "Internal error occurred: rpc error: code = DeadlineExceeded desc = context deadline exceeded") {
-			//retry
+			secrets.Log("create failed with err: %s", err)
+			secrets.Log("retrying")
 			_, err = secrets.impl.Create(obj)
 		}
 
@@ -200,7 +201,8 @@ func (secrets *Secrets) Update(key string, rls *rspb.Release) error {
 	_, err = secrets.impl.Update(obj)
 	if err != nil {
 		if strings.Contains(err.Error(), "Internal error occurred: rpc error: code = DeadlineExceeded desc = context deadline exceeded") {
-			//retry
+			secrets.Log("update failed with err: %s", err)
+			secrets.Log("retrying")
 			_, err = secrets.impl.Update(obj)
 		}
 
