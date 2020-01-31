@@ -140,7 +140,7 @@ func (p *packageCmd) run() error {
 		return err
 	}
 
-	overrideVals, err := vals(p.valueFiles, p.values, p.stringValues)
+	overrideVals, err := vals(p.valueFiles, p.values, p.stringValues, nil, "", "", "")
 	if err != nil {
 		return err
 	}
