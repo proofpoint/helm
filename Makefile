@@ -177,7 +177,7 @@ endif
 ifndef HAS_GIT
 	$(error You must install Git)
 endif
-	glide install --strip-vendor
+	glide install --debug --strip-vendor
 	go build -o bin/protoc-gen-go ./vendor/github.com/golang/protobuf/protoc-gen-go
 
 include versioning.mk
