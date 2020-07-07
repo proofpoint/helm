@@ -51,7 +51,6 @@ import:
   - package: vbom.ml/util
     repo: https://github.com/fvbommel/util.git
     vcs: git
-    revision: efcd4e0f97874370259c7d93e12aad57911dea81
   - package: github.com/grpc-ecosystem/go-grpc-prometheus
   - package: k8s.io/kubernetes
     version: v1.16.2
